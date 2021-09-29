@@ -17,6 +17,8 @@
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('css/sb-admin.min.css') }}" rel="stylesheet">
+    <!-- Bootstrap core JavaScript-->
+    <script src="{{ mix('js/app.js') }}"></script>
 
 </head>
 
@@ -192,9 +194,6 @@
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
-
-    <!-- Bootstrap core JavaScript-->
-    <script src="{{ mix('js/app.js') }}"></script>
 
     <!-- Custom scripts for all pages-->
     <script src="{{ asset('js/sb-admin.js') }}"></script>

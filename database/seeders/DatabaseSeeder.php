@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\City;
 use App\Models\Country;
 use App\Models\State;
 use App\Models\User;
@@ -60,10 +61,18 @@ class DatabaseSeeder extends Seeder
             $id = Country::insertGetId($country);
 
             for ($i=0; $i < 10; $i++) {
-                State::insert([
+                $state_code = State::insertGetId([
                     'name' => "State $i-$id",
                     'country_id' => $id
                 ]);
+
+                for ($ju=0; $ju < 10; $ju++) {
+                    City::insert([
+                        'name' => "City $ju-$state_code",
+                        'state_id' => $state_code,
+                        'country_id' => $id
+                    ]);
+                }
             }
         }
     }

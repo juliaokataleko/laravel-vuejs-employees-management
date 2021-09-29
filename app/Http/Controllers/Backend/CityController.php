@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\City;
+use App\Models\Country;
 use Illuminate\Http\Request;
 
 class CityController extends Controller
@@ -12,9 +14,20 @@ class CityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $query = City::query();
+
+        if (request('search')) {
+            $query->where('name', 'like', "%{$request->search}%")
+            ->orWhere('country_id', 'like', "%{$request->search}%");
+        }
+
+        $cities = $query->paginate(10);
+
+        return view('dashboard.city.index', [
+            'cities' => $cities
+        ]);
     }
 
     /**
@@ -24,7 +37,10 @@ class CityController extends Controller
      */
     public function create()
     {
-        //
+        $countries = Country::all();
+        return view('dashboard.city.create', [
+            'countries' => $countries
+        ]);
     }
 
     /**
@@ -35,7 +51,9 @@ class CityController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $this->validateData($request);
+        City::insert($data);
+        return redirect(route('cities.index'))->with('success', 'City saved.');
     }
 
     /**
@@ -55,9 +73,13 @@ class CityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(City $city)
     {
-        //
+        $countries = Country::all();
+        return view('dashboard.city.edit', [
+            'city' => $city,
+            'countries' => $countries
+        ]);
     }
 
     /**
@@ -67,9 +89,11 @@ class CityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, City $city)
     {
-        //
+        $data = $this->validateData($request);
+        $city->update($data);
+        return redirect(route('cities.index'))->with('success', 'City saved.');
     }
 
     /**
@@ -78,8 +102,18 @@ class CityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(City $city)
     {
-        //
+        $city->delete();
+        return redirect(route('cities.index'))->with('success', 'City deleted successful');
+    }
+
+    public function validateData(Request $request)
+    {
+        return $request->validate([
+            'name' => 'required|string',
+            'country_id' => 'required',
+            'state_id' => 'required'
+        ]);
     }
 }

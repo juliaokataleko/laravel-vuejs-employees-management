@@ -109,4 +109,13 @@ class CountryController extends Controller
             'country_code' => 'required|string'
         ]);
     }
+
+    public function getStates()
+    {
+        $country = request('country');
+        $country = Country::find(intval($country));
+        return response()->json([
+            'states' => $country->states
+        ]);
+    }
 }

@@ -5,11 +5,11 @@
 <div class="card">
 
     <div class="card-header d-sm-flex align-items-center justify-content-between mb-2">
-        <h5 class="h3 mb-0 text-gray-800">States</h5>
-        <form method="GET" action="{{ route('states.index') }}">
+        <h5 class="h3 mb-0 text-gray-800">Cities</h5>
+        <form method="GET" action="{{ route('cities.index') }}">
             <div class="form-row align-items-center">
                 <div class="col">
-                    <input type="search" name="search" class="form-control" value="{{ request('search') ?? '' }}" id="inlineFormInput" placeholder="Search states">
+                    <input type="search" name="search" class="form-control" value="{{ request('search') ?? '' }}" id="inlineFormInput" placeholder="Search cities">
                 </div>
                 <div class="col">
                     <button type="submit" class="btn
@@ -17,7 +17,7 @@
                 </div>
             </div>
         </form>
-        <a href="{{ route('states.create') }}" class="btn btn-primary">New State</a>
+        <a href="{{ route('cities.create') }}" class="btn btn-primary">New City</a>
     </div>
     <div class="card-body">
 
@@ -26,24 +26,27 @@
                 <thead class="thead-dark">
                     <tr>
                         <th scope="col">#ID</th>
-                        <th scope="col">Country</th>
+
                         <th scope="col">Name</th>
+                        <th scope="col">State</th>
+                        <th scope="col">Country</th>
                         <th scope="col">Manage</th>
                     </tr>
                 </thead>
                 <tbody>
 
-                    @foreach ($states as $state)
+                    @foreach ($cities as $city)
                     <tr>
-                        <td scope="row">#{{ $state->id }}</th>
-                        <td>{{ $state->country->name }}</td>
-                        <td>{{ $state->name }}</td>
+                        <td scope="row">#{{ $city->id }}</th>
+                        <td>{{ $city->name }}</td>
+                        <td>{{ $city->state->name }}</td>
+                        <td>{{ $city->country->name }}</td>
                         <td>
-                            <form action="{{ route('states.destroy', $state->id) }}" method="post">
+                            <form action="{{ route('cities.destroy', $city->id) }}" method="post">
                                 @csrf
                                 @method('DELETE')
                                 <div class="btn-group">
-                                    <a href="{{ route('states.edit', $state->id) }}" class="btn btn-primary"><i class="fa fa-edit"></i></a>
+                                    <a href="{{ route('cities.edit', $city->id) }}" class="btn btn-primary"><i class="fa fa-edit"></i></a>
                                     <button type="submit" onclick="return confirm('Are you sure?')" class="btn btn-danger"><i class="fa fa-times"></i></button>
                                 </div>
                             </form>
@@ -58,7 +61,7 @@
 
     </div>
     <div class="card-footer">
-        {{ $states->links() }}
+        {{ $cities->links() }}
     </div>
 </div>
 @endsection

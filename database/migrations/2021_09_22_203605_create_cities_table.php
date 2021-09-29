@@ -19,6 +19,14 @@ class CreateCitiesTable extends Migration
             $table->foreignId('state_id')->constrained();
             $table->string('name');
             $table->timestamps();
+
+            $table->foreign('country_id')
+            ->references('id')->on('countries')
+            ->onDelete('cascade');
+
+            $table->foreign('state_id')
+            ->references('id')->on('states')
+            ->onDelete('cascade');
         });
     }
 

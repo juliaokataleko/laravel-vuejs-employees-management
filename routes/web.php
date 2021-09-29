@@ -27,4 +27,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::resource('users', UserController::class);
 Route::resource('countries', CountryController::class);
 Route::resource('states', StateController::class);
+Route::post('country-states', [CountryController::class, 'getStates'])->name('get-states');
 Route::resource('cities', CityController::class);
+
