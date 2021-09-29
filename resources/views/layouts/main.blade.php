@@ -84,7 +84,7 @@
                         <a class="collapse-item" href="{{ route('countries.index') }}">Countries</a>
                         <a class="collapse-item" href="{{ route('states.index') }}">States</a>
                         <a class="collapse-item" href="{{ route('cities.index') }}">Cities</a>
-                        <a class="collapse-item" href="cards.html">Departments</a>
+                        <a class="collapse-item" href="{{ route('departments.index') }}">Departments</a>
                     </div>
                 </div>
             </li>
@@ -164,7 +164,7 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     @include('includes.flash-messages')
-                    <div class="">
+                    <div class="mb-4">
                         @yield('content')
                     </div>
 
@@ -175,7 +175,7 @@
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            <footer class="sticky-footer bg-white">
+            <footer class="sticky-footer bg-white border-top">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
                         <span>Copyright &copy; {{ env('APP_NAME') }} {{ date('Y') }}</span>

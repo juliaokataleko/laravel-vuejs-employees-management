@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\City;
 use App\Models\Country;
+use App\Models\Department;
 use App\Models\State;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -18,7 +19,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\User::factory(10)->create();
+        \App\Models\User::factory(1000)->create();
 
         User::insert([
             'first_name' => 'Julião',
@@ -74,6 +75,12 @@ class DatabaseSeeder extends Seeder
                     ]);
                 }
             }
+        }
+
+        for ($kata=0; $kata < 100; $kata++) {
+            Department::insert([
+                'name' => "Department #$kata"
+            ]);
         }
     }
 }
