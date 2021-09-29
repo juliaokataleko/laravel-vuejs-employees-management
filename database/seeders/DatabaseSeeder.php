@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Country;
+use App\Models\State;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
@@ -56,7 +57,14 @@ class DatabaseSeeder extends Seeder
         ];
 
         foreach ($countries as $key => $country) {
-            Country::insert($country);
+            $id = Country::insertGetId($country);
+
+            for ($i=0; $i < 10; $i++) {
+                State::insert([
+                    'name' => "State $i-$id",
+                    'country_id' => $id
+                ]);
+            }
         }
     }
 }
