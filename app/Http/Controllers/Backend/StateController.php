@@ -14,9 +14,15 @@ class StateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $query = State::query();
+
+        if (request('search')) {
+            $query->where('name', 'like', "%{$request->search}%")
+            ->orWhere('country_id', 'like', "%{$request->search}%");
+        }
+
         $states = $query->paginate(10);
         return view('dashboard.states.index', compact('states'));
     }
