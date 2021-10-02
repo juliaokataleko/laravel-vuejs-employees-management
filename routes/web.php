@@ -32,3 +32,6 @@ Route::post('country-states', [CountryController::class, 'getStates'])->name('ge
 Route::resource('cities', CityController::class);
 Route::resource('departments', DepartmentController::class);
 
+Route::any('{any}', function (){
+    return view('dashboard.employees.index');
+})->where('any', '.*');

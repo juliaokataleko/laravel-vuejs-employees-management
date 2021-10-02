@@ -3,7 +3,6 @@
 @section('content')
 
 <div class="card">
-
     <div class="card-header d-sm-flex align-items-center justify-content-between mb-2">
         <h5 class="h3 mb-0 text-gray-800">Countries</h5>
         <form method="GET" action="{{ route('countries.index') }}">
@@ -61,4 +60,5 @@
         {{ $countries->links() }}
     </div>
 </div>
+
 @endsection
