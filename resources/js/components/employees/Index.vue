@@ -50,8 +50,9 @@
                 <th scope="col">Country</th>
                 <th scope="col">Address</th>
                 <th scope="col">Department</th>
-                <th scope="col">Salary</th>
                 <th scope="col">Manage</th>
+                <th scope="col">Salary</th>
+                <th scope="col">Actions</th>
               </tr>
             </thead>
             <tbody v-if="employees.length > 0">
@@ -62,6 +63,7 @@
                 <td>{{ employee.country.name }}</td>
                 <td>{{ employee.address }}</td>
                 <td>{{ employee.department.name }}</td>
+                <td>{{ employee.manager.first_name + ' ' + employee.manager.last_name }}</td>
                 <td>{{ employee.sallary }}</td>
                 <td>
                   

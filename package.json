@@ -26,8 +26,10 @@
     },
     "dependencies": {
         "@fortawesome/fontawesome-free": "^5.15.4",
+        "inputmask": "^5.0.6",
         "moment": "^2.29.1",
         "v-mask": "^2.3.0",
+        "v-money": "^0.8.1",
         "vue-router": "^3.5.2",
         "vuejs-datepicker": "^1.6.2"
     }

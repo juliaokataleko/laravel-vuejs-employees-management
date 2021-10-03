@@ -13,6 +13,11 @@ import VueMask from 'v-mask';
 
 Vue.use(VueMask);
 
+import money from 'v-money';
+
+// register directive v-money and component <money>
+Vue.use(money, { precision: 4 })
+
 
 Vue.use(VueRouter);
 

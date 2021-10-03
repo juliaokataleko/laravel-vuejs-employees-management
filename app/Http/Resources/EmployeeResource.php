@@ -5,6 +5,7 @@ namespace App\Http\Resources;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\Department;
+use App\Models\Employee;
 use App\Models\State;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -27,6 +28,7 @@ class EmployeeResource extends JsonResource
             'address' => $this->address,
             'zip_code' => $this->zip_code,
             'department' => $this->department ?? new Department(),
+            'manager' => $this->department->manager ?? new Employee(),
             'country' => $this->country ?? new Country(),
             'state' => $this->state ?? new State(),
             'city' => $this->city ?? new City(),

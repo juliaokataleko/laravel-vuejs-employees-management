@@ -46,6 +46,7 @@
                   type="text" 
                   class="form-control"
                   value="" 
+                  v-money="money"
                   v-model="form.sallary"
                   id="sallary" 
                   name="sallary">
@@ -163,6 +164,7 @@
 <script>
 import Datepicker from 'vuejs-datepicker';
 import moment from 'moment';
+import {VMoney} from 'v-money'
 
 export default {
   components: {
@@ -184,12 +186,21 @@ export default {
         city_id: '',
         department_id: '',
         zip_code: '',
-        sallary: '',
+        sallary: 10,
         birthdate: '',
         date_hired: '',
+      },
+      money: {
+        decimal: ',',
+        thousands: '.',
+        prefix: 'R$ ',
+        suffix: '',
+        precision: 2,
+        masked: false /* doesn't work with directive */
       }
     }
   },
+  directives: {money: VMoney},
   created() {
     this.getCountries();
     this.getDepartments();

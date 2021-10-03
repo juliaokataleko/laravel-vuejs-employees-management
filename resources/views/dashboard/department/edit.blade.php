@@ -13,10 +13,28 @@
             @csrf
             @method('put')
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-6">
                     <div class="form-group">
                         <label for="name">Name</label>
                         <input type="text" class="form-control" value="{{ old('name') ?? $department->name }}" id="name" name="name">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="manager_id">Manager</label>
+                        <select class="form-control" name="manager_id" id="manager_id">
+                            @foreach ($employees as $employee)
+                            <option value="{{ $employee->id }}"
+                                @if($employee->id == $department->manager_id) {{ 'selected' }} @endif
+                            >{{ $employee->first_name . ' ' . $employee->last_name }}</option>
+                            @endforeach
+                        </select>
+
+                        @error('manager_id')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
                     </div>
                 </div>
 

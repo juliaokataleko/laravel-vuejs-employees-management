@@ -77,7 +77,7 @@ class DatabaseSeeder extends Seeder
             }
         }
 
-        for ($kata=0; $kata < 100; $kata++) {
+        for ($kata=0; $kata < 10; $kata++) {
             Department::insert([
                 'name' => "Department #$kata"
             ]);

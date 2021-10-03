@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Department;
+use App\Models\Employee;
 use Illuminate\Http\Request;
 
 class DepartmentController extends Controller
@@ -32,7 +33,8 @@ class DepartmentController extends Controller
      */
     public function create()
     {
-        return view('dashboard.department.create');
+        $employees = Employee::all();
+        return view('dashboard.department.create', compact('employees'));
     }
 
     /**
@@ -67,8 +69,10 @@ class DepartmentController extends Controller
      */
     public function edit(Department $department)
     {
+        $employees = Employee::all();
         return view('dashboard.department.edit', [
-            'department' => $department
+            'department' => $department,
+            'employees' => $employees
         ]);
     }
 
@@ -101,7 +105,8 @@ class DepartmentController extends Controller
     public function validateData(Request $request)
     {
         return $request->validate([
-            'name' => 'required|string'
+            'name' => 'required|string',
+            'manager_id' => 'nullable'
         ]);
     }
 

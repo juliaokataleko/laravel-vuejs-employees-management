@@ -28,6 +28,7 @@
                         <th scope="col">#ID</th>
                         <th scope="col">Name</th>
                         <th scope="col">Manage</th>
+                        <th scope="col">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -36,6 +37,7 @@
                     <tr>
                         <td scope="row">#{{ $department->id }}</td>
                         <td>{{ $department->name }}</td>
+                        <td>{{ $department->manager->first_name ?? '' }}</td>
                         <td>
                             <form action="{{ route('departments.destroy', $department->id) }}" method="post">
                                 @csrf
