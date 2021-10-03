@@ -13,7 +13,7 @@
               <div class="form-group">
                   <label for="first_name">First Name</label>
                   <input type="text" class="form-control" 
-                  value="" 
+                  value="" required 
                   id="first_name" 
                   v-model="form.first_name"
                   name="first_name">
@@ -22,7 +22,7 @@
           <div class="col-md-4">
               <div class="form-group">
                   <label for="middle_name">Middle Name</label>
-                  <input type="text" class="form-control" 
+                  <input required type="text" class="form-control" 
                   value="" 
                   id="middle_name" 
                   v-model="form.middle_name"
@@ -32,7 +32,7 @@
           <div class="col-md-4">
               <div class="form-group">
                   <label for="last_name">Last Name</label>
-                  <input type="text" class="form-control" 
+                  <input required type="text" class="form-control" 
                   value="" 
                   id="last_name" 
                   v-model="form.last_name"
@@ -43,7 +43,8 @@
               <div class="form-group">
                   <label for="sallary">Salary</label>
                   <input 
-                  type="text" 
+                  type="text"
+                  required 
                   class="form-control"
                   value="" 
                   v-model="form.sallary"

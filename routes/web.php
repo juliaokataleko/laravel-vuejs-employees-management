@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Backend\ActivityController;
 use App\Http\Controllers\Backend\CityController;
 use App\Http\Controllers\Backend\CountryController;
 use App\Http\Controllers\Backend\DepartmentController;
@@ -32,7 +33,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('country-states', [CountryController::class, 'getStates'])->name('get-states');
     Route::resource('cities', CityController::class);
     Route::resource('departments', DepartmentController::class);
-
+    Route::resource('activities', ActivityController::class);
     Route::any('{any}', function () {
         return view('dashboard.employees.index');
     })->where('any', '.*');

@@ -2233,6 +2233,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -60561,6 +60562,7 @@ var render = function() {
                   attrs: {
                     type: "text",
                     value: "",
+                    required: "",
                     id: "first_name",
                     name: "first_name"
                   },
@@ -60594,6 +60596,7 @@ var render = function() {
                   ],
                   staticClass: "form-control",
                   attrs: {
+                    required: "",
                     type: "text",
                     value: "",
                     id: "middle_name",
@@ -60629,6 +60632,7 @@ var render = function() {
                   ],
                   staticClass: "form-control",
                   attrs: {
+                    required: "",
                     type: "text",
                     value: "",
                     id: "last_name",
@@ -60669,6 +60673,7 @@ var render = function() {
                   staticClass: "form-control",
                   attrs: {
                     type: "text",
+                    required: "",
                     value: "",
                     id: "sallary",
                     name: "sallary"

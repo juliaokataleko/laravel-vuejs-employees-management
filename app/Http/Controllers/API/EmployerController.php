@@ -17,6 +17,11 @@ class EmployerController extends Controller
      */
     public function index()
     {
+        activity()
+        ->causedBy(auth()->user())
+            //->performedOn($someContentModel)
+            ->log('Acess employes list');
+
         $query = Employee::query();
 
         if(request('search') AND !empty(request('search'))) {
@@ -55,8 +60,15 @@ class EmployerController extends Controller
      */
     public function store(Request $request)
     {
+        
         $data = $this->rules($request);
         $employee = Employee::create($data);
+
+        activity()
+        ->causedBy(auth()->user())
+            ->performedOn($employee)
+            ->log('Store a employer');
+
         return response()->json($employee);
     }
 
@@ -68,6 +80,11 @@ class EmployerController extends Controller
      */
     public function show(Employee $employee)
     {
+        activity()
+        ->causedBy(auth()->user())
+            ->performedOn($employee)
+            ->log('Acess the employer data');
+
         return new EmployeeSingleResource($employee);
     }
 
@@ -93,6 +110,12 @@ class EmployerController extends Controller
     {
         $data = $this->rules($request);
         $employee->update($data);
+
+        activity()
+        ->causedBy(auth()->user())
+            ->performedOn($employee)
+            ->log('Update a employer');
+
         return response()->json($employee);
     }
 
@@ -104,6 +127,11 @@ class EmployerController extends Controller
      */
     public function destroy(Employee $employee)
     {
+        activity()
+        ->causedBy(auth()->user())
+            ->performedOn($employee)
+            ->log('Delete a employer');
+
         $employee->delete();
         return response()->json("Deleted successful");
     }

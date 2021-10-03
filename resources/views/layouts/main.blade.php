@@ -69,6 +69,9 @@
                         <a class="collapse-item" href="{{ route('users.index') }}">Users</a>
                         <a class="collapse-item" href="cards.html">Role</a>
                         <a class="collapse-item" href="cards.html">Permission</a>
+                        <a class="collapse-item" href="{{ route('activities.index') }}">
+                            Activity log
+                        </a>
                     </div>
                 </div>
             </li>
