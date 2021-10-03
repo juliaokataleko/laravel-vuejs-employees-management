@@ -1,11 +1,11 @@
 <template>
   <div class="card">
     <div class="card-header d-sm-flex align-items-center justify-content-between mb-2">
-      <h5 class="h3 mb-0 text-gray-800">Create a new Employee</h5>
+      <h5 class="h3 mb-0 text-gray-800">Update Employee</h5>
       <router-link class="btn btn-primary" :to="{name: 'EmployeesIndex'}"><i class="fa fa-arrow-left"></i> Back</router-link>
     </div>
 
-    <form  @submit.prevent="storeEmployer()" >
+    <form  @submit.prevent="updateEmployer()" >
 
       <div class="card-body">
         <div class="row">
@@ -149,7 +149,7 @@
       </div>
 
       <div class="card-footer">
-        <div class="float-right">
+        <div class="">
             <button type="submit"
             class="btn btn-primary">Save</button>
         </div>
@@ -193,8 +193,19 @@ export default {
   created() {
     this.getCountries();
     this.getDepartments();
+    this.getEmployee();
   },
   methods: {
+    getEmployee() {
+      axios.get('/api/employees/' + this.$route.params.id).then(res => {
+        this.form = res.data.data;
+        this.getStates();
+        this.getCities();
+        console.log(res)
+      }).catch(error => {
+        console.log(error);
+      })
+    },
     getCountries() {
       axios.get('/api/employees/countries').then(res => {
         this.countries = res.data;
@@ -223,22 +234,22 @@ export default {
         console.log(error);
       })
     },
-    storeEmployer() {
+    updateEmployer() {
       // format date
       this.form.date_hired = this.format_date(this.form.date_hired);
       this.form.birthdate = this.format_date(this.form.birthdate);
 
-      axios.post(`/api/employees`, this.form).then(res => {
+      axios.put(`/api/employees/${this.$route.params.id}`, this.form).then(res => {
         console.log(res);
       }).catch(error => {
         console.log(error);
       })
-
+      alert("Employee updated.")
       this.$router.push("/employees")
     },
     format_date(value) {
       if(value) {
-        return moment(String(value)).format('YYYYMMDD');
+        return moment(String(value)).format('YYYY-MM-DD');
       }
     }
   },

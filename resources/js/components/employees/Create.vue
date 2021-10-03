@@ -149,7 +149,7 @@
       </div>
 
       <div class="card-footer">
-        <div class="float-right">
+        <div class="">
             <button type="submit"
             class="btn btn-primary">Save</button>
         </div>
@@ -238,7 +238,7 @@ export default {
     },
     format_date(value) {
       if(value) {
-        return moment(String(value)).format('YYYYMMDD');
+        return moment(String(value)).format('YYYY-MM-DD');
       }
     }
   },

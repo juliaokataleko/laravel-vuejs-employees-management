@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\EmployeeResource;
+use App\Http\Resources\EmployeeSingleResource;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 
@@ -17,6 +18,19 @@ class EmployerController extends Controller
     public function index()
     {
         $query = Employee::query();
+
+        if(request('search') AND !empty(request('search'))) {
+            $q = request('search');
+            $query->where('first_name', 'like', "%$q%")
+                ->orWhere('middle_name', 'like', "%$q%")
+                ->orWhere('sallary', 'like', "%$q%")
+                ->orWhere('last_name', 'like', "%$q%");
+        }
+
+        if (request('department_id') and !empty(request('department_id'))) {
+            $q = (int)request('department_id');
+            $query->where('department_id', $q);
+        }
 
         $employees = $query->get();
         return EmployeeResource::collection($employees);
@@ -52,9 +66,9 @@ class EmployerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Employee $employee)
     {
-        //
+        return new EmployeeSingleResource($employee);
     }
 
     /**
@@ -63,7 +77,7 @@ class EmployerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Employee $employee)
     {
         //
     }
@@ -75,9 +89,11 @@ class EmployerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Employee $employee)
     {
-        //
+        $data = $this->rules($request);
+        $employee->update($data);
+        return response()->json($employee);
     }
 
     /**
@@ -86,9 +102,10 @@ class EmployerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Employee $employee)
     {
-        //
+        $employee->delete();
+        return response()->json("Deleted successful");
     }
 
     public function rules(Request $request)

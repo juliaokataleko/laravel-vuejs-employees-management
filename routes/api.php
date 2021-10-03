@@ -26,5 +26,9 @@ Route::get('employees/{state}/cities', [EmployeeDataController::class, 'cities']
 Route::get('employees/departments', [EmployeeDataController::class, 'departments']);
 
 
-Route::get('employees', [EmployerController::class, 'index']);
-Route::post('employees', [EmployerController::class, 'store']);
+// Route::get('employees', [EmployerController::class, 'index']);
+// Route::post('employees', [EmployerController::class, 'store']);
+// Route::get('employees/{employee}', [EmployerController::class, 'show']);
+// Route::delete('employees/{employee}', [EmployerController::class, 'destroy']);
+
+Route::apiResource('employees', EmployerController::class);
