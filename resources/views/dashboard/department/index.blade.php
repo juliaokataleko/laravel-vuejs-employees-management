@@ -23,7 +23,7 @@
 
         <div class="table-responsive">
             <table class="table table-striped">
-                <thead class="thead-dark">
+                <thead class="">
                     <tr>
                         <th scope="col">#ID</th>
                         <th scope="col">Name</th>

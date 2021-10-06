@@ -41,8 +41,8 @@
       </div>
       <div class="card-body">
         <div class="table-responsive">
-          <table class="table">
-            <thead class="thead-light">
+          <table class="table table-striped">
+            <thead class="thead-success">
               <tr>
                 <th scope="col">#ID</th>
                 <th scope="col">First Name</th>

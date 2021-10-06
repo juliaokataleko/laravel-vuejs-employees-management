@@ -4,6 +4,8 @@ use App\Http\Controllers\Backend\ActivityController;
 use App\Http\Controllers\Backend\CityController;
 use App\Http\Controllers\Backend\CountryController;
 use App\Http\Controllers\Backend\DepartmentController;
+use App\Http\Controllers\Backend\PermissionController;
+use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\StateController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -28,6 +30,9 @@ Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::resource('users', UserController::class);
+    Route::resource('permissions', PermissionController::class);
+    Route::resource('roles', RoleController::class);
+
     Route::resource('countries', CountryController::class);
     Route::resource('states', StateController::class);
     Route::post('country-states', [CountryController::class, 'getStates'])->name('get-states');
@@ -38,4 +43,3 @@ Route::group(['middleware' => 'auth'], function () {
         return view('dashboard.employees.index');
     })->where('any', '.*');
 });
-

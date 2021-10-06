@@ -61730,7 +61730,7 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "card-body" }, [
         _c("div", { staticClass: "table-responsive" }, [
-          _c("table", { staticClass: "table" }, [
+          _c("table", { staticClass: "table table-striped" }, [
             _vm._m(0),
             _vm._v(" "),
             _vm.employees.length > 0
@@ -61813,7 +61813,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("thead", { staticClass: "thead-light" }, [
+    return _c("thead", { staticClass: "thead-success" }, [
       _c("tr", [
         _c("th", { attrs: { scope: "col" } }, [_vm._v("#ID")]),
         _vm._v(" "),

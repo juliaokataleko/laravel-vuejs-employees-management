@@ -20,6 +20,9 @@
     <!-- Bootstrap core JavaScript-->
     <script src="{{ mix('js/app.js') }}"></script>
 
+    <!-- Styles -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
 </head>
 
 <body id="page-top">
@@ -28,12 +31,12 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <ul class="navbar-nav bg-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
                 <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-laugh-wink"></i>
+                    <i class="fa fa-cog"></i>
                 </div>
                 <div class="sidebar-brand-text mx-3">{{ env('APP_NAME') }}</div>
             </a>
@@ -67,8 +70,8 @@
                 <div id="collapseUser" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{ route('users.index') }}">Users</a>
-                        <a class="collapse-item" href="cards.html">Role</a>
-                        <a class="collapse-item" href="cards.html">Permission</a>
+                        <a class="collapse-item" href="{{ route('roles.index') }}">Role</a>
+                        <a class="collapse-item" href="{{ route('permissions.index') }}">Permission</a>
                         <a class="collapse-item" href="{{ route('activities.index') }}">
                             Activity log
                         </a>
@@ -111,7 +114,7 @@
             <div id="content">
 
                 <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top border-bottom">
+                <nav class="navbar navbar-expand navbar-dark bg-warning topbar mb-4 static-top border-bottom">
 
                     <!-- Sidebar Toggle (Topbar) -->
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
