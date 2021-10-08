@@ -109,7 +109,6 @@ class UserController extends Controller
                 $user->assignRole($role->name);
             }
         }
-        
 
         $user->update($data);
         return redirect(route('users.index'))->with('success', 'User updated successful');
