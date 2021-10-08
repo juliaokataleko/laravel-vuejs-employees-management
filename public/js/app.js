@@ -2771,7 +2771,14 @@ __webpack_require__.r(__webpack_exports__);
           department_id: this.department
         }
       }).then(function (res) {
-        _this.employees = res.data.data;
+        if (res.data.data) _this.employees = res.data.data;else if (res.data.warning) {
+          // alert(res.data.warning)
+          _this.showMessage = true;
+          _this.message = res.data.warning;
+          setTimeout(function () {
+            _this.showMessage = false;
+          }, 15000);
+        }
       })["catch"](function (error) {
         console.log(error);
       });

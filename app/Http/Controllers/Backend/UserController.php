@@ -7,6 +7,8 @@ use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -72,7 +74,10 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        return view('dashboard.users.edit', compact('user'));
+        $permissions = Permission::all();
+        $roles = Role::all();
+
+        return view('dashboard.users.edit', compact('roles', 'user', 'permissions'));
     }
 
     /**
@@ -89,6 +94,22 @@ class UserController extends Controller
         if(!is_null($data['password']) AND $data['password'] === $data['password_confirmation']) {
             $data['password'] = bcrypt($data['password']);
         } else unset($data['password']);
+        
+        if ($request->permissions) {
+            $permissions_array = Permission::whereIn('id', $request->permissions)
+                ->pluck('name')->toArray();
+            $user->syncPermissions($permissions_array);
+        }
+
+        // check if is there role_id passed
+        if($request->role_id) {
+            $role = Role::find($request->role_id);
+            if(!is_null($role)) {
+                // add role to user
+                $user->assignRole($role->name);
+            }
+        }
+        
 
         $user->update($data);
         return redirect(route('users.index'))->with('success', 'User updated successful');

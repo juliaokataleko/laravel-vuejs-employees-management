@@ -17,29 +17,37 @@ class EmployerController extends Controller
      */
     public function index()
     {
-        activity()
-        ->causedBy(auth()->user())
-            //->performedOn($someContentModel)
-            ->log('Acess employes list');
 
-        $query = Employee::query();
+        if(auth()->user()->can('show employees')) {
+            activity()
+                ->causedBy(auth()->user())
+                //->performedOn($someContentModel)
+                ->log('Access employes list');
 
-        if(request('search') AND !empty(request('search'))) {
-            $q = request('search');
-            $query->where('first_name', 'like', "%$q%")
-                ->orWhere('middle_name', 'like', "%$q%")
-                ->orWhere('sallary', 'like', "%$q%")
-                ->orWhere('last_name', 'like', "%$q%");
+            $query = Employee::query();
+
+            if (request('search') and !empty(request('search'))) {
+                $q = request('search');
+                $query->where('first_name', 'like', "%$q%")
+                    ->orWhere('middle_name', 'like', "%$q%")
+                    ->orWhere('sallary', 'like', "%$q%")
+                    ->orWhere('last_name', 'like', "%$q%");
+            }
+
+            if (request('department_id') and !empty(request('department_id'))) {
+                $q = (int)request('department_id');
+                $query->where('department_id', $q);
+            }
+
+            $employees = $query->get();
+            return EmployeeResource::collection($employees);
+            return response()->json($employees);
+        } else {
+            return response()->json([
+                'warning' => 'Cannot acess this page'
+            ]);
         }
-
-        if (request('department_id') and !empty(request('department_id'))) {
-            $q = (int)request('department_id');
-            $query->where('department_id', $q);
-        }
-
-        $employees = $query->get();
-        return EmployeeResource::collection($employees);
-        return response()->json($employees);
+        
     }
 
     /**

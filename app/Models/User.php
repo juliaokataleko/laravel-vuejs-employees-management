@@ -49,4 +49,9 @@ class User extends Authenticatable
     {
         return $this->first_name . ' ' . $this->last_name . " ({$this->username}#{$this->id})";
     }
+
+    public function getIsAdminAtribbute()
+    {
+        dd(request()->user()->roles()->pluck('name','id'));
+    }
 }

@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\API\EmployeeDataController;
+use App\Http\Controllers\API\EmployerController;
 use App\Http\Controllers\Backend\ActivityController;
 use App\Http\Controllers\Backend\CityController;
 use App\Http\Controllers\Backend\CountryController;
@@ -38,7 +40,26 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('country-states', [CountryController::class, 'getStates'])->name('get-states');
     Route::resource('cities', CityController::class);
     Route::resource('departments', DepartmentController::class);
-    Route::resource('activities', ActivityController::class);
+
+    Route::group(['middleware' => ['role:super_admin|admin']], function () {
+        Route::resource('activities', ActivityController::class);
+    });
+
+    // API Routes
+    Route::group(['prefix'=>'api/'], function () {
+        Route::get('employees/countries', [EmployeeDataController::class, 'countries']);
+        Route::get('employees/{country}/states', [EmployeeDataController::class, 'states']);
+        Route::get('employees/{state}/cities', [EmployeeDataController::class, 'cities']);
+        Route::get('employees/departments', [EmployeeDataController::class, 'departments']);
+
+        // Route::get('employees', [EmployerController::class, 'index']);
+        // Route::post('employees', [EmployerController::class, 'store']);
+        // Route::get('employees/{employee}', [EmployerController::class, 'show']);
+        // Route::delete('employees/{employee}', [EmployerController::class, 'destroy']);
+
+        Route::apiResource('employees', EmployerController::class);
+    });
+    
     Route::any('{any}', function () {
         return view('dashboard.employees.index');
     })->where('any', '.*');

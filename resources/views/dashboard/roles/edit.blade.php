@@ -1,12 +1,12 @@
-@extends('layouts.app')
-@section('title', 'Editar função')
+@extends('layouts.main')
+
 @section('content')
-    @can('all role')
+    @can('edit roles')
         <section class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-12">
-                        <h1>Editar função</h1>
+                        <h3>Edit role</h3>
                     </div>
                 </div>
             </div>
@@ -14,15 +14,13 @@
 
         <div class="content px-3">
 
-            @include('adminlte-templates::common.errors')
-
             <div class="card">
 
                 {!! Form::model($role, ['route' => ['roles.update', $role->id], 'method' => 'patch']) !!}
     
                 <div class="card-body">
                     <div class="row">
-                        @include('admin.roles.fields')
+                        @include('dashboard.roles.fields')
                     </div>
                     <div>
                         @foreach ($permissions as $permission)
@@ -37,8 +35,8 @@
                 </div>
 
                 <div class="card-footer">
-                    {!! Form::submit('Salvar', ['class' => 'btn btn-primary']) !!}
-                    <a href="{{ route('roles.index') }}" class="btn btn-default">Cancelar</a>
+                    {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
+                    <a href="{{ route('roles.index') }}" class="btn btn-default">Cancel</a>
                 </div>
 
             {!! Form::close() !!}

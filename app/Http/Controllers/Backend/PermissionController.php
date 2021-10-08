@@ -39,7 +39,7 @@ class PermissionController extends Controller
     public function store(Request $request)
     {
         $data = $this->rules($request);
-        $permission = $this->permissionRepository->create($data);
+        $permission = Permission::create($data);
 
         activity()
             ->causedBy(auth()->user())
@@ -63,7 +63,8 @@ class PermissionController extends Controller
             return redirect(route('permissions.index'))->with('success', 'Permission not found');
         }
 
-        return view('dashboard.permissions.show')->with('permission', $permission);
+        return view('dashboard.permissions.show')
+        ->with('permission', $permission);
     }
 
     /**
@@ -80,7 +81,8 @@ class PermissionController extends Controller
             return redirect(route('permissions.index'))->with('success', 'Permission not found');
         }
 
-        return view('dashboard.permissions.edit')->with('permission', $permission);
+        return view('dashboard.permissions.edit')
+        ->with('permission', $permission);
     }
 
     /**
@@ -106,7 +108,8 @@ class PermissionController extends Controller
             ->performedOn($permission)
             ->log('update');
 
-        return redirect(route('permissions.index'))->with('success', 'Permission updated');
+        return redirect(route('permissions.index'))
+        ->with('success', 'Permission updated');
     }
 
     /**
@@ -130,7 +133,8 @@ class PermissionController extends Controller
 
         $permission->delete();
 
-        return redirect(route('permissions.index'))->with('success', 'Permission deleted');
+        return redirect(route('permissions.index'))
+        ->with('success', 'Permission deleted');
     }
 
     public function rules(Request $request)

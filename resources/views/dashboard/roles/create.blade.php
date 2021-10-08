@@ -1,43 +1,36 @@
-@extends('layouts.app')
-@section('title', 'Cadastrar funções do sistema')
+@extends('layouts.main')
+
 @section('content')
 
-    @can('all role')
-        <section class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-12">
-                        <h1>Cadastrar funções do sistema</h1>
-                    </div>
-                </div>
-            </div>
-        </section>
+@can('add roles')
 
-        <div class="content px-3">
+<div class="card">
 
-            @include('adminlte-templates::common.errors')
-
-            <div class="card">
-
-                {!! Form::open(['route' => 'roles.store']) !!}
-
-                <div class="card-body">
-
-                    <div class="row">
-                        @include('admin.roles.fields')
-                    </div>
-
-                </div>
-
-                <div class="card-footer">
-                    {!! Form::submit('Salvar', ['class' => 'btn btn-primary']) !!}
-                    <a href="{{ route('roles.index') }}" class="btn btn-default">Cancelar</a>
-                </div>
-
-                {!! Form::close() !!}
-
-            </div>
+    <div class="card-header">
+        <div class="col-sm-12">
+            <h3>Register new role</h3>
         </div>
-    @endcan
-    
+    </div>
+
+    {!! Form::open(['route' => 'roles.store']) !!}
+
+    <div class="card-body">
+
+        <div class="row">
+            @include('dashboard.roles.fields')
+        </div>
+
+    </div>
+
+    <div class="card-footer">
+        {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
+        <a href="{{ route('roles.index') }}" class="btn btn-default">Cancel</a>
+    </div>
+
+    {!! Form::close() !!}
+
+</div>
+
+@endcan
+
 @endsection

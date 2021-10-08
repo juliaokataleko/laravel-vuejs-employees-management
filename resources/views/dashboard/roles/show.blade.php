@@ -1,31 +1,23 @@
-@extends('layouts.app')
-@section('title', 'Detalhes da função')
+@extends('layouts.main')
+
 @section('content')
-    <section class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>Detalhes da função</h1>
-                </div>
-                <div class="col-sm-6">
-                    <a class="btn btn-default float-right"
-                       href="{{ route('roles.index') }}">
-                        Voltar
-                    </a>
-                </div>
-            </div>
+@can('show roles')
+<div class="card">
+    <div class="card-header d-flex flex-direction-row justify-content-between align-items-center">
+        <h3>Role Details</h3>
+        @can('add roles')
+        <div class="col-sm-6">
+            <a class="btn btn-outline-secondary float-right" href="{{ route('roles.index') }}">
+                Back
+            </a>
         </div>
-    </section>
-
-    <div class="content px-3">
-        <div class="card">
-
-            <div class="card-body">
-                <div class="row">
-                    @include('admin.roles.show_fields')
-                </div>
-            </div>
-
-        </div>
+        @endcan
     </div>
+    <div class="card-body">
+        @include('dashboard.roles.show_fields')
+    </div>
+</div>
+
+
+@endcan
 @endsection

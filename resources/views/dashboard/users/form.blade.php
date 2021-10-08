@@ -63,40 +63,45 @@ $isNew = true;
         @enderror
     </div>
 </div>
+<div class="m-2 border rounded mt-4 p-3">
 
-@if(!$isNew)
-<div class="alert alert-success">
-    Change Password (Opcional)
-</div>
-@endif
-<div class="form-group row">
-    <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
 
-    <div class="col-md-6">
-        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" @if($isNew) {{ 'required' }} @endif autocomplete="new-password">
+    @if(!$isNew)
+    <div class="alert alert-success">
+        Change Password (Opcional)
+    </div>
+    @endif
 
-        @error('password')
+    <div class="form-group row">
+        <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+
+        <div class="col-md-6">
+            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" @if($isNew) {{ 'required' }} @endif autocomplete="new-password">
+
+            @error('password')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+            @enderror
+        </div>
+    </div>
+
+    @if(!$isNew)
+
+    <div class="form-group row">
+        <label for="password_confirmation" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
+
+        <div class="col-md-6">
+            <input id="password_confirmation" type="password" class="form-control" name="password_confirmation" autocomplete="new-password">
+        </div>
+
+        @error('password_confirmation')
         <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>
         </span>
         @enderror
     </div>
+
+    @endif
+
 </div>
-
-@if(!$isNew)
-
-<div class="form-group row">
-    <label for="password_confirmation" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
-
-    <div class="col-md-6">
-        <input id="password_confirmation" type="password" class="form-control" name="password_confirmation" autocomplete="new-password">
-    </div>
-
-    @error('password_confirmation')
-    <span class="invalid-feedback" role="alert">
-        <strong>{{ $message }}</strong>
-    </span>
-    @enderror
-</div>
-
-@endif

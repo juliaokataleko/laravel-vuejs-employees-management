@@ -118,7 +118,19 @@ export default {
           department_id: this.department
         }
       }).then(res => {
-        this.employees = res.data.data;
+
+        if(res.data.data)
+          this.employees = res.data.data;
+        else if(res.data.warning) {
+          // alert(res.data.warning)
+          this.showMessage = true;
+          this.message = res.data.warning;
+
+          setTimeout(() => {
+            this.showMessage = false;
+          }, 15000);
+        }
+
       }).catch(error => {
         console.log(error);
       });

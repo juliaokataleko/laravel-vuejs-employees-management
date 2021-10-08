@@ -53,15 +53,18 @@
             <!-- Divider -->
             <hr class="sidebar-divider">
 
+            @can('show employees')
             <li class="nav-item active">
                 <a class="nav-link" href="/employees">
                     <i class="fa fa-users fa-users-alt"></i>
                     <span>Employee Management</span></a>
             </li>
+            @endcan
 
             <!-- Divider -->
             <hr class="sidebar-divider">
 
+            @role('super_admin|admin')
             <li class="nav-item active">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUser" aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-user"></i>
@@ -70,15 +73,19 @@
                 <div id="collapseUser" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{ route('users.index') }}">Users</a>
+                        @role('super_admin')
                         <a class="collapse-item" href="{{ route('roles.index') }}">Role</a>
                         <a class="collapse-item" href="{{ route('permissions.index') }}">Permission</a>
+                        @endrole
                         <a class="collapse-item" href="{{ route('activities.index') }}">
                             Activity log
                         </a>
                     </div>
                 </div>
             </li>
+            @endrole
 
+            @role('super_admin')
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item active">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
@@ -94,6 +101,20 @@
                     </div>
                 </div>
             </li>
+            @elserole('admin')
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item active">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>System Management</span>
+                </a>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{ route('departments.index') }}">Departments</a>
+                    </div>
+                </div>
+            </li>
+            @endif
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">

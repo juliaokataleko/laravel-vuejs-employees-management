@@ -7,6 +7,7 @@ use App\Models\Country;
 use App\Models\Department;
 use App\Models\State;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EmployeeDataController extends Controller
 {

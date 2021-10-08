@@ -1,46 +1,21 @@
-@extends('layouts.app')
-@section('title', 'Funções do sistema')
+@extends('layouts.main')
+
 @section('content')
 
-    <section class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>Funções do sistema</h1>
-                </div>
-                
-                @can('all role')
-                    <div class="col-sm-6">
-                        <a class="btn btn-primary float-right"
-                        href="{{ route('roles.create') }}">
-                            Cadastrar
-                        </a>
-                    </div>
-                @endcan
-                
-            </div>
+<div class="card">
+    <div class="card-header d-flex flex-direction-row justify-content-between align-items-center">
+        <h3>System Roles</h3>
+        @can('add roles')
+        <div class="col-sm-6">
+            <a class="btn btn-primary float-right" href="{{ route('roles.create') }}">
+                Add
+            </a>
         </div>
-    </section>
-
-    <div class="content px-3">
-
-        @include('flash::message')
-
-        <div class="clearfix"></div>
-
-        <div class="card">
-            <div class="card-body p-0">
-                @include('admin.roles.table')
-
-                <div class="card-footer clearfix float-right">
-                    <div class="float-right">
-                        @include('adminlte-templates::common.paginate', ['records' => $roles])
-                    </div>
-                </div>
-            </div>
-
-        </div>
+        @endcan
     </div>
+    <div class="card-body">
+        @include('dashboard.roles.table')
+    </div>
+</div>
 
 @endsection
-
