@@ -7,6 +7,28 @@ $isNew = true;
 @endphp
 
 <div class="form-group row">
+    <label for="username" class="col-md-4 col-form-label text-md-right">{{ __('Company') }}</label>
+
+    <div class="col-md-6">
+        <select id="company_id" class="form-control @error('company_id') 
+        is-invalid @enderror" name="company_id">
+            <option value="">Select</option>
+            @foreach ($companies as $comp)
+            <option value="{{ $comp->id }}" @if($user->company_id == $comp->id) {{ 'selected' }} @endif
+                >{{ $comp->name }}</option>
+            @endforeach
+
+        </select>
+
+        @error('company_id')
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+        @enderror
+    </div>
+</div>
+
+<div class="form-group row">
     <label for="username" class="col-md-4 col-form-label text-md-right">{{ __('Username') }}</label>
 
     <div class="col-md-6">
@@ -63,6 +85,7 @@ $isNew = true;
         @enderror
     </div>
 </div>
+
 <div class="m-2 border rounded mt-4 p-3">
 
 

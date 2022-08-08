@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Backend\CompanyController;
 use App\Http\Controllers\API\EmployeeDataController;
 use App\Http\Controllers\API\EmployerController;
 use App\Http\Controllers\Backend\ActivityController;
@@ -30,19 +31,25 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 
+        'index'])->name('home');
+    
     Route::resource('users', UserController::class);
     Route::resource('permissions', PermissionController::class);
     Route::resource('roles', RoleController::class);
-
-    Route::resource('countries', CountryController::class);
-    Route::resource('states', StateController::class);
     Route::post('country-states', [CountryController::class, 'getStates'])->name('get-states');
-    Route::resource('cities', CityController::class);
+    
     Route::resource('departments', DepartmentController::class);
 
     Route::group(['middleware' => ['role:super_admin|admin']], function () {
         Route::resource('activities', ActivityController::class);
+    });
+
+    Route::group(['middleware' => ['role:super_admin']], function () {
+        Route::resource('countries', CountryController::class);
+        Route::resource('states', StateController::class);
+        Route::resource('companies', CompanyController::class);
+        Route::resource('cities', CityController::class);
     });
 
     // API Routes

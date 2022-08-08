@@ -27,6 +27,9 @@ class CreateEmployeesTable extends Migration
             $table->char('zip_code');
             $table->date('birthdate')->toJson();
             $table->date('date_hired')->nullable();
+            $table->unsignedBigInteger('company_id')->nullable();
+            $table->unsignedBigInteger('creator_id')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

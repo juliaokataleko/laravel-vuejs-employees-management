@@ -17,7 +17,7 @@
                 </div>
             </div>
         </form>
-        <a href="{{ route('departments.create') }}" class="btn btn-primary">New Country</a>
+        <a href="{{ route('departments.create') }}" class="btn btn-primary">New Department</a>
     </div>
     <div class="card-body">
 

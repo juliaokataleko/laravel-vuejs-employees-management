@@ -2,18 +2,18 @@
 
 namespace App\Models;
 
-use App\Tenant\Traits\TenantTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Department extends Model
+class CompanyCategory extends Model
 {
-    use HasFactory, SoftDeletes, TenantTrait;
+    use
+    HasFactory, SoftDeletes;
     protected $guarded = [];
 
-    public function manager()
+    public function companies()
     {
-        return $this->belongsTo(Employee::class, 'manager_id');
+        return $this->hasMany(Company::class, 'category_id');
     }
 }

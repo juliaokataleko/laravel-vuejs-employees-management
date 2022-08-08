@@ -38,7 +38,9 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fa fa-cog"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">{{ env('APP_NAME') }}</div>
+                <div class="sidebar-brand-text mx-3">
+                    {{ env('APP_NAME') }}
+                </div>
             </a>
 
             <!-- Divider -->
@@ -51,24 +53,33 @@
                     <span>Dashboard</span></a>
             </li>
             <!-- Divider -->
-            <hr class="sidebar-divider">
 
             @can('show employees')
+            <hr class="sidebar-divider">
+
             <li class="nav-item active">
                 <a class="nav-link" href="/employees">
                     <i class="fa fa-users fa-users-alt"></i>
-                    <span>Employee Management</span></a>
+                    <span>Employees Management</span></a>
             </li>
             @endcan
 
             <!-- Divider -->
             <hr class="sidebar-divider">
 
+            @role('super_admin')
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ route('companies.index') }}">
+                    <i class="fa fa-users fa-users-alt"></i>
+                    <span>Companies Management</span></a>
+            </li>
+            @endrole
+
             @role('super_admin|admin')
             <li class="nav-item active">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUser" aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-user"></i>
-                    <span>User Management</span>
+                    <span>Users Management</span>
                 </a>
                 <div id="collapseUser" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">

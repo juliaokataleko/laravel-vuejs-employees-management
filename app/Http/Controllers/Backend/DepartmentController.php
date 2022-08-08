@@ -46,7 +46,7 @@ class DepartmentController extends Controller
     public function store(Request $request)
     {
         $data = $this->validateData($request);
-        Department::insert($data);
+        Department::create($data);
         return redirect(route('departments.index'))->with('success', 'Department saved');
     }
 

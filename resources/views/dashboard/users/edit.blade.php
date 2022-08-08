@@ -14,7 +14,7 @@
             @method('put')
             @include('dashboard.users.form', compact('user'))
 
-            @can('show roles')
+            @role('admin|super_admin')
             <div class="row m-2 border rounded mt-4 p-3">
                 <hr>
                 <h4 class="col-12">Permissões</h4>
@@ -27,15 +27,15 @@
                 </div>
                 @endforeach
             </div>
-            @endcan
+            @endrole
 
-            @role('admin|super_admin')
+            @role('super_admin')
             <div class="row m-2 border rounded mt-4 p-3">
                 <label for="role_id">Role</label>
                 <select class="form-control" name="role_id" id="role_id">
-                    <option value="">Select an option</option>
+                    <option value="" selected>Select an option</option>
                     @foreach ($roles as $role)
-                    <option value="{{ $role->id }}" @role($role->name) {{ 'selected' }} @endrole
+                    <option value="{{ $role->id }}" @if($user->role_id == $role->id) {{ 'selected' }} @endrole
                         >{{ $role->name }}</option>
                     @endforeach
                 </select>

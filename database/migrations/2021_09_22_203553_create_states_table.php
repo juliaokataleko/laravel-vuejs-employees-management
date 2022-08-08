@@ -17,6 +17,7 @@ class CreateStatesTable extends Migration
             $table->id();
             $table->foreignId('country_id')->constrained();
             $table->string('name');
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('country_id')

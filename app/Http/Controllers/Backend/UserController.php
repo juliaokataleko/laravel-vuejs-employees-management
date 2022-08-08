@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
+use App\Models\Company;
 use App\Models\User;
+use App\Models\UserModel;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -27,6 +29,12 @@ class UserController extends Controller
                 ->orWhere('first_name', 'like', "%{$request->search}%")
                 ->orWhere('last_name', 'like', "%{$request->search}%");
         }
+
+        if (auth()->user()->userlevel != 'super_admin') {
+            $user = auth()->user();
+            $query->where('company_id', $user->company_id);
+        }
+
         $users = $query->paginate(10);
         return view('dashboard.users.index', compact('users'));
     }
@@ -38,7 +46,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('dashboard.users.create');
+        $companies = Company::all();
+        return view('dashboard.users.create', compact('companies'));
     }
 
     /**
@@ -51,7 +60,7 @@ class UserController extends Controller
     {
         $data = $this->validateData($request);
         $data['password'] = bcrypt($data['password']);
-        User::insertGetId($data);
+        UserModel::insertGetId($data);
         return redirect(route('users.index'))->with('success', 'User created successful');
     }
 
@@ -61,7 +70,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(UserModel $user)
     {
         return view('dashboard.users.show', compact('user'));
     }
@@ -72,12 +81,14 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit(UserModel $user)
     {
+        $companies = Company::all();
+        $user = User::findOrFail($user->id);
         $permissions = Permission::all();
         $roles = Role::all();
 
-        return view('dashboard.users.edit', compact('roles', 'user', 'permissions'));
+        return view('dashboard.users.edit', compact('roles', 'companies', 'user', 'permissions'));
     }
 
     /**
@@ -89,9 +100,10 @@ class UserController extends Controller
      */
     public function update(UserUpdateRequest $request, User $user)
     {
-        $data = $request->all();
+        $data = $this->validateData($request);
 
-        if(!is_null($data['password']) AND $data['password'] === $data['password_confirmation']) {
+        if(!is_null($data['password']) 
+        AND $data['password'] == $data['password_confirmation']) {
             $data['password'] = bcrypt($data['password']);
         } else unset($data['password']);
         
@@ -106,6 +118,7 @@ class UserController extends Controller
             $role = Role::find($request->role_id);
             if(!is_null($role)) {
                 // add role to user
+                $data['role_id'] = $role->id;
                 $user->assignRole($role->name);
             }
         }
@@ -120,7 +133,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(UserModel $user)
     {
         if($user->id === auth()->id())
             return redirect(route('users.index'))->with('warning', 'You are deleting your self');
@@ -136,7 +149,9 @@ class UserController extends Controller
             'last_name' => 'min:2|required',
             'first_name' => 'min:2|required',
             'password' => '',
+            'password_confirmation' => '',
             'email' => 'min:6|required',
+            'company_id' => 'nullable'
         ]);
 
         return $data;

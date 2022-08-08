@@ -6,6 +6,8 @@
 
     <div class="card-header d-sm-flex align-items-center justify-content-between mb-2">
         <h5 class="h3 mb-0 text-gray-800">Users</h5>
+
+        @role('super_admin')
         <form method="GET" action="{{ route('users.index') }}">
             <div class="form-row align-items-center">
                 <div class="col">
@@ -17,6 +19,8 @@
                 </div>
             </div>
         </form>
+        @endrole
+        
         <a href="{{ route('users.create') }}" class="btn btn-primary">New User</a>
     </div>
     <div class="card-body">

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\City;
+use App\Models\Company;
 use App\Models\Country;
 use App\Models\Department;
 use App\Models\State;
@@ -26,12 +27,13 @@ class DatabaseSeeder extends Seeder
             'last_name' => 'Kataleko',
             'username' => 'juliaokataleko',
             'email' => 'juliofeli78@gmail.com',
+            'userlevel' => 'super_admin',
             'password' => bcrypt(123456),
             'email_verified_at' => now(),
             'remember_token' => Str::random(10),
         ]);
 
-        \App\Models\User::factory(1000)->create();
+        // \App\Models\User::factory(1000)->create();
 
         $countries = [
             [
@@ -105,6 +107,21 @@ class DatabaseSeeder extends Seeder
         $role1->givePermissionTo($delete);
         $role1->givePermissionTo($show);
 
+        $add = Permission::create(['name' => 'add departments']);
+        $edit = Permission::create(['name' => 'edit departments']);
+        $delete = Permission::create(['name' => 'delete departments']);
+        $show = Permission::create(['name' => 'show departments']);
+
+        $role->givePermissionTo($add);
+        $role->givePermissionTo($edit);
+        $role->givePermissionTo($delete);
+        $role->givePermissionTo($show);
+
+        $role1->givePermissionTo($add);
+        $role1->givePermissionTo($edit);
+        $role1->givePermissionTo($delete);
+        $role1->givePermissionTo($show);
+
         // Roles permissions
         $add = Permission::create(['name' => 'add roles']);
         $show = Permission::create(['name' => 'show roles']);
@@ -130,5 +147,34 @@ class DatabaseSeeder extends Seeder
         // add permissions to super_admin
         $admin = User::find(1);
         $admin->assignRole('super_admin');
+
+        // companies and users
+        for ($i=0; $i < 5; $i++) { 
+            $company_id = Company::insertGetId([
+                'name' => "Company $i",
+                'email' => "company$i@gmail.com",
+                'phone' => "+244 979993"
+            ]);
+
+            for ($j=0; $j < 5; $j++) {
+
+                $user = User::create([
+                    'first_name' => "User $i$j",
+                    'last_name' => "Last $i$j",
+                    'username' => 'userx'.$i.$j,
+                    'email' => 'userx' . $i . $j.'@gmail.com',
+                    'userlevel' => 'admin',
+                    'password' => bcrypt(123456),
+                    'email_verified_at' => now(),
+                    'remember_token' => Str::random(10),
+                    'company_id' => $company_id
+                ]);
+
+                if($j == 0) {
+                    $user->role_id = Role::where('name', 'admin')->first()->id;
+                    $user->assignRole('admin');
+                }
+            }
+        }
     }
 }
